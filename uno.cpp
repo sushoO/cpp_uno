@@ -5,7 +5,6 @@
 #include <tuple>
 #include <array>
 #include <algorithm>
-#include <queue>
 
 //Card Class Methods
 
@@ -173,13 +172,13 @@ void Hands::testFunction() // testFunction() to check whether functions in class
     std::cout << "\nFunctions in Hands Class are Called...\n";
 }
 
-std::vector<std::vector<Card> > Hands::dealHand() // function that deals the Hands to each player.
+std::vector<std::vector<Card> > Hands::dealHands() // function that deals the Hands to each player.
 {
     for (int deal = 0; deal < players; deal++)
     {
         for (int handSize = 0; handSize < 7; handSize++)
         {
-            printAttributes(); // printAttributes() is defined later. prints every attribute of the class Hands.
+            //printAttributes(); // printAttributes() is defined later. prints every attribute of the class Hands.
             availableCards = deck.size(); // checks how many cards are still available to be dealt.
             selection = rand() % (availableCards + 1); // stores the selection number that was randomly generated from the number of available cards. selection is between 0 and the deck size. I add one because the rand() function generates a number between 0 and one less than the number to the right of the %.
             hand.push_back(deck[selection]); // here the selected card is put into a hand.
@@ -220,13 +219,26 @@ void Hands::printHands() // prints the hand. for debugging and making sure the h
 }
 
 void Hands::printHand()
-{
-    for (int overV = 0; overV < players; overV++)
+{   
+    //std::cout << "Type: " << typeid(hands[0][0]).name() << "\n";
+    for (int c = 0; c < 7; c++) // haha c++, like the language
     {
-        for (int subV = 0; subV < 8; subV++)
-        {
-            std::cout << "Color: " << hands[overV][subV].getColor() << " Number: " << hands[overV][subV].getNumber() << ", ";
-        }
+        std::cout << "Color: " << hands[0][c].getColor() << " Number: " << hands[0][c].getNumber() << ", ";
+    }
+    std::cout << "\n";
+    for (int c = 0; c < 7; c++)
+    {
+        std::cout << "Color: " << hands[1][c].getColor() << " Number: " << hands[1][c].getNumber() << ", ";
+    }
+    std::cout << "\n";
+    for (int c = 0; c < 7; c++) 
+    {
+        std::cout << "Color: " << hands[2][c].getColor() << " Number: " << hands[2][c].getNumber() << ", ";
+    }
+    std::cout << "\n";
+    for (int c = 0; c < 7; c++) 
+    {
+        std::cout << "Color: " << hands[3][c].getColor() << " Number: " << hands[3][c].getNumber() << ", ";
     }
     std::cout << "\n\nDone\n";
 }
@@ -271,15 +283,31 @@ int Player::getNumber()
     return number; 
 }
 
-int Game::askPlayerCount()
+void Game::askPlayerCount()
 {
-    std::cout << "How many players are playing?\n";
+    std::cout << "How many players are playing the game?\n";
     std::cin >> numPlayers;
 
     for (int p = 1; p < (numPlayers + 1); p++)
     {
-        playerList.push
-        std::cout << "Enter the first player's name: ";
-        
+        std::string playerName;
+        std::cout << "Enter player name: ";
+        std::cin >> playerName;
+        playerNames.push_back(playerName);
     }
+
+    for (int instantiatePlayers = 0; instantiatePlayers < playerNames.size(); instantiatePlayers++)
+    {
+        playerList.push(Player(playerNames[instantiatePlayers], (instantiatePlayers + 1)));
+    }
+}
+
+std::queue<Player> Game::getPlayerList()
+{
+    return playerList;
+}
+
+int Game::getPlayerCount()
+{
+    return numPlayers;
 }

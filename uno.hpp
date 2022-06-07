@@ -5,12 +5,16 @@
 #include <queue>
 
 class Card
-{
+{   
         int color; // color property of each Card.
         int number; // number of each card. Action cards have a number greater than 9. 
 
+        std::string name;
+
     public:
         Card(int acolor, int anumber); // constructor of Card. Used to make every Card needed in Uno. 
+        std::vector<std::string> createDeck(); // a function that returns a vector of strings used to generate the game deck. the returned vector is also stored in the variable "deck."
+        std::vector<std::string> shuffleDeck(); // 
         int getColor();
         int getNumber();
 };
@@ -38,7 +42,7 @@ class Hands // creates a class Hands for the generation of each hand's vector. E
     public:
         Hands(std::vector<Card> card_deck, int persons); // constructor to take the arguments for the class. takes in the game deck and the number of people playing.
         void testFunction(); // testFunction() to check that the functions within the class Hands are successfully being called.
-        std::vector< std::vector<Card> > dealHand(); // the function to deal the hands that returns a vector of the hand. 
+        std::vector< std::vector<Card> > dealHands(); // the function to deal the hands that returns a vector of the hand. 
         void printHands();
         void printHand(); // function to print the hand generated. used to debug and make sure the hands are properly generated.
         void printAttributes(); // function to print every attribute of the Hands class. for debugging and making sure the values are correct.
@@ -48,7 +52,6 @@ class Hands // creates a class Hands for the generation of each hand's vector. E
 
 class Player
 {
-    private:
         std::string name;
         int number;
         std::vector<std::string> playerList;
@@ -67,12 +70,11 @@ class Player
 class Game
 {
         int numPlayers;
+        std::vector<std::string> playerNames;
         std::queue<Player> playerList;
 
     public:
-        int askPlayerCount();
-
+        void askPlayerCount();
+        int getPlayerCount();
         std::queue<Player> getPlayerList();
-
-
 };
