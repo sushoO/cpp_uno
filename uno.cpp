@@ -161,7 +161,7 @@ void Deck::testFunction() // testFunction that prints a statement to check if th
 
 //Hands Class Methods
 
-Hands::Hands(std::vector<std::string> card_deck, int persons) // constructor for class Hands. takes the game deck and # of players as arguments.
+Hands::Hands(std::vector<Card> card_deck, int persons) // constructor for class Hands. takes the game deck and # of players as arguments.
 {
     deck = card_deck; // assigns the game deck to an attribute
     players = persons; // assigns the # of players as an attribute.
@@ -172,7 +172,7 @@ void Hands::testFunction() // testFunction() to check whether functions in class
     std::cout << "\nFunctions in Hands Class are Called...\n";
 }
 
-std::vector<std::vector<std::string> > Hands::dealHand() // function that deals the Hands to each player.
+std::vector<std::vector<Card> > Hands::dealHand() // function that deals the Hands to each player.
 {
     for (int deal = 0; deal < players; deal++)
     {
@@ -181,8 +181,7 @@ std::vector<std::vector<std::string> > Hands::dealHand() // function that deals 
             printAttributes(); // printAttributes() is defined later. prints every attribute of the class Hands.
             availableCards = deck.size(); // checks how many cards are still available to be dealt.
             selection = rand() % (availableCards + 1); // stores the selection number that was randomly generated from the number of available cards. selection is between 0 and the deck size. I add one because the rand() function generates a number between 0 and one less than the number to the right of the %.
-            card = deck[selection]; // gets the string for the card that was selected. for debugging to make sure an actual card is picked.
-            hand.push_back(card); // here the selected card is put into a hand.
+            hand.push_back(deck[selection]); // here the selected card is put into a hand.
             deck.erase(deck.begin() + (selection - 1)); // the card put into the hand is then removed from the deck.   
         }
         hands.push_back(hand);
@@ -208,7 +207,7 @@ void Hands::printHands() // prints the hand. for debugging and making sure the h
     {
         for (int print_subHand = 0; print_subHand < 7; print_subHand++)
         {
-            std::cout << hands[print_hand][print_subHand] << ", "; // prints each indice, plus a comma and space for legibility.
+            std::cout << "Color: " << hands[print_hand][print_subHand].getColor() << " Number: " << hands[print_hand][print_subHand].getNumber() << ", "; // prints each indice, plus a comma and space for legibility.
         }
         
     }
@@ -225,7 +224,7 @@ void Hands::printHand()
     {
         for (int subV = 0; subV < 8; subV++)
         {
-            std::cout << hands[overV][subV] << ", ";
+            std::cout << "Color: " << hands[overV][subV].getColor() << " Number: " << hands[overV][subV].getNumber() << ", ";
         }
     }
     std::cout << "\n\nDone\n";
@@ -244,7 +243,29 @@ void Hands::printAttributes() // print the attributes of Hands. every attribute 
     std::cout << "\nEach Hand Size: " << hand.size() << "\n============\n";
 }
 
-std::vector<std::vector <std::string> > Hands::getHands()
+std::vector< std::vector<Card> > Hands::getHands()
 {
     return hands;
+}
+
+Player::Player(std::string anom, int playerNumber)
+{
+    name = anom;
+    number = playerNumber;
+
+}
+
+std::string Player::getName()
+{
+    return name;
+}
+
+std::vector<std::string> Player::getPlayers()
+{
+    return playerList;
+}
+
+int Player::getNumber()
+{
+    return number; 
 }
