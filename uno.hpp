@@ -2,11 +2,12 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <queue>
 
 class Card
 {
-    int color; // color property of each Card.
-    int number; // number of each card. Action cards have a number greater than 9. 
+        int color; // color property of each Card.
+        int number; // number of each card. Action cards have a number greater than 9. 
 
     public:
         Card(int acolor, int anumber); // constructor of Card. Used to make every Card needed in Uno. 
@@ -47,17 +48,31 @@ class Hands // creates a class Hands for the generation of each hand's vector. E
 
 class Player
 {
-    std::string name;
-    int number;
-    std::vector<std::string> playerList;
-    std::vector< std::vector<Card> > hand;
+    private:
+        std::string name;
+        int number;
+        std::vector<std::string> playerList;
+        std::vector< std::vector<Card> > hand;
 
     public:
-    Player(std::string anom, int playerNumber);
-    std::string getName();
-    int getNumber();
-    std::vector<std::string> getPlayers(); 
-    void addPlayers();
-    std::vector < std::vector<Card> > createHand(); 
+        Player(std::string anom, int playerNumber);
+        std::string getName();
+        int getNumber();
+        std::vector<std::string> getPlayers(); 
+        void addPlayers();
+        std::vector < std::vector<Card> > createHand(); 
+
+};
+
+class Game
+{
+        int numPlayers;
+        std::queue<Player> playerList;
+
+    public:
+        int askPlayerCount();
+
+        std::queue<Player> getPlayerList();
+
 
 };

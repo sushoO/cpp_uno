@@ -28,14 +28,6 @@ int main(){
     */
 
     srand (time(NULL)); //this line is for seeding the random number generator used to shuffle and deal hands. 
-    int players;
-    std::cout << "\nHow many players are playing the game?\n"; //Ask the player count, then take the response as a variable.
-    std::cin << players;
-    for (int p = 0, p < players, p++)
-    {
-        
-    }
-
 
 
     //std::cout << "\n" << typeid(players).name() << "\n"; // this checks what data type "players" is. For debugging and testing whether it returns as an int.
@@ -48,3 +40,5 @@ int main(){
     sample.printHands();
     std::vector< std::vector<Card> > handTest = sample.getHands();
     std::cout << "\n" <<  handTest.size() << "\n" << typeid(handTest).name() << "\n";
+
+}

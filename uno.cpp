@@ -5,6 +5,7 @@
 #include <tuple>
 #include <array>
 #include <algorithm>
+#include <queue>
 
 //Card Class Methods
 
@@ -268,4 +269,17 @@ std::vector<std::string> Player::getPlayers()
 int Player::getNumber()
 {
     return number; 
+}
+
+int Game::askPlayerCount()
+{
+    std::cout << "How many players are playing?\n";
+    std::cin >> numPlayers;
+
+    for (int p = 1; p < (numPlayers + 1); p++)
+    {
+        playerList.push
+        std::cout << "Enter the first player's name: ";
+        
+    }
 }
