@@ -32,7 +32,7 @@ int main(){
 
     //std::cout << "\n" << typeid(players).name() << "\n"; // this checks what data type "players" is. For debugging and testing whether it returns as an int.
 
-    Hands sample(generatedDeck, players); //Create an object from class Hands.
+    Hands sample(generatedDeck, 4); //Create an object from class Hands.
 
     std::vector< std::vector<Card> > player_hand = sample.dealHand(); //Creates a vector of strings from the returned value of dealHand(), which generated different vectors for each player.
     //sample.printHand(); //printHand() is a function in the class Hands that checks how the hands look (for debugging).
