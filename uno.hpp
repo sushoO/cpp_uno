@@ -3,20 +3,21 @@
 #include <vector>
 #include <array>
 #include <queue>
+#include <stack>
 
 class Card
 {   
         int color; // color property of each Card.
         int number; // number of each card. Action cards have a number greater than 9. 
-
-        std::string name;
+        std::string name; // name of each card as a string. Names are generated based on color and number values.
 
     public:
-        Card(int acolor, int anumber); // constructor of Card. Used to make every Card needed in Uno. 
+        Card(int acolor, int anumber, std::string aname); // constructor of Card. Used to make every Card needed in Uno. 
         std::vector<std::string> createDeck(); // a function that returns a vector of strings used to generate the game deck. the returned vector is also stored in the variable "deck."
         std::vector<std::string> shuffleDeck(); // 
         int getColor();
         int getNumber();
+        std::string getName(); 
 };
 
 class Deck // creates a class Deck for the generation of the game deck. This deck is the standard Uno deck with 108 cards.
@@ -55,15 +56,16 @@ class Player
         std::string name;
         int number;
         std::vector<std::string> playerList;
-        std::vector< std::vector<Card> > hand;
+        std::vector<Card> hand;
 
     public:
         Player(std::string anom, int playerNumber);
         std::string getName();
         int getNumber();
         std::vector<std::string> getPlayers(); 
-        void addPlayers();
-        std::vector < std::vector<Card> > createHand(); 
+        void addPlayers(); 
+        void setHand(std::vector<Card> ahand);
+        std::vector<Card> getHand();
 
 };
 
@@ -72,9 +74,13 @@ class Game
         int numPlayers;
         std::vector<std::string> playerNames;
         std::queue<Player> playerList;
+        std::stack<Card> middlePile;
 
     public:
         void askPlayerCount();
         int getPlayerCount();
         std::queue<Player> getPlayerList();
+        void printPlayerList();
+        void playTurn();
+        int check();
 };

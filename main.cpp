@@ -32,10 +32,9 @@ int main(){
     game.askPlayerCount();
     int playerCount = game.getPlayerCount();
     std::queue<Player> playerList = game.getPlayerList();
-    std::cout << playerList.size() << "\n";
+    //std::cout << playerList.size() << "\n";
    
-    std::cout << "Name: " << playerList.front().getName() << "\n";
-    std::cout << "Name: " << playerList.back().getName() << "\n";
+    game.printPlayerList();
 
     //std::cout << "\n" << typeid(players).name() << "\n"; // this checks what data type "players" is. For debugging and testing whether it returns as an int.
 
@@ -46,6 +45,8 @@ int main(){
     //sample.printAttributes(); //printAttributes() prints each private variable in Hands (for debugging)
     //sample.printHand();
     //sample.printHands();
-    std::vector< std::vector<Card> > handTest = sample.getHands();
+    
+    //std::vector< std::vector<Card> > handTest = sample.getHands();
     //std::cout << "\n" <<  handTest.size() << "\n" << typeid(handTest).name() << "\n";
+    game.playTurn();
 }

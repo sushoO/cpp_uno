@@ -28,10 +28,11 @@ void Card::testFunction() // function to check if functions within class Card ar
 
 //Card Class Methods
 
-Card::Card(int acolor, int anumber)
+Card::Card(int acolor, int anumber, std::string aname)
 {
     color = acolor;
     number = anumber;
+    name = aname;
 }
 
 int Card::getColor()
@@ -42,40 +43,48 @@ int Card::getNumber()
 {
     return number;
 }
+std::string Card::getName()
+{
+    return name;
+}
 
 //Deck Class Methods
-
 
 std::vector<Card> Deck::createDeck() // function to generate the game deck.
 {
     std::array<int, 5> color = {0 /*Wild*/, 1 /*Red*/, 2 /*Green*/, 3 /*Blue*/, 4 /*Yellow*/};
     std::array<int, 13> number = {0 /*Card #0 or Wild Card if Color = 0*/, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 /*Skip*/, 11 /*Reverse*/, 12 /*Plus 2 or Plus 4 if color = 0*/};
+    std::array<std::string, 5> colorNames = {"Wild", "Red", "Green", "Blue", "Yellow"};
+    std::array<std::string, 13> numberNames = {" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " Skip", " Reverse", " Plus 2"};
+
 
     for (int assignColor = 1; assignColor < color.size(); assignColor++)
     {
-        deck.push_back(Card(0, 0));
-        deck.push_back(Card(0, 12));
-        deck.push_back(Card(color[assignColor], 0));
+        deck.push_back(Card(0, 0, colorNames[0]));
+        deck.push_back(Card(0, 12, (colorNames[0] + " Plus 4")));
+        deck.push_back(Card(color[assignColor], number[0], colorNames[assignColor] + numberNames[0]));
 
         for (int twice = 0; twice < 2; twice++)
         {
             for (int assignNum = 1; assignNum < number.size(); assignNum++)
             {
-                deck.push_back(Card(color[assignColor], number[assignNum]));
+
+                deck.push_back(Card(color[assignColor], number[assignNum], colorNames[assignColor] + numberNames[assignNum]));
             }
         }
     }
     return deck;
 }
 
-
 void Deck::printDeck() // printDeck() to see the deck that was generated. for debugging
 {
     for (int deckIndice = 0; deckIndice < deck.size(); deckIndice++)
     {
-        std::cout << "Color: " << deck[deckIndice].getColor() << " Number: " << deck[deckIndice].getNumber() << ", ";
+        std::cout << "Name: " << deck[deckIndice].getName() << "\n";
     }
+    std::cout << "\n\n\n";
 }
+
 std::vector<Card> Deck::shuffleDeck()
 {
     std::random_shuffle(deck.begin(), deck.end());
@@ -152,8 +161,6 @@ std::vector<Card> Deck::shuffleDeck()
     return deck; // returns the vector that these for loops generate. this is the game deck.
     */
 
-
-
 void Deck::testFunction() // testFunction that prints a statement to check if the functions in a class are successfully called.
 {
     std::cout << "\nFunctions in Deck Class are Called...\n";
@@ -187,6 +194,7 @@ std::vector<std::vector<Card> > Hands::dealHands() // function that deals the Ha
         hands.push_back(hand);
         hand.clear();
     }
+    
     /*
         for (int handSize = 0; handSize < 7; handSize++) // 7 cards are dealt to each player, so a card is dealt to each hand 7 times.
         {
@@ -201,6 +209,7 @@ std::vector<std::vector<Card> > Hands::dealHands() // function that deals the Ha
         
     return hands; // after the generation of the hand, each hand's vector is returned.
 }
+
 void Hands::printHands() // prints the hand. for debugging and making sure the hands are properly generated.
 {
     for (int print_hand = 0; print_hand < hands.size(); print_hand++) // iterates through every indice in hands.
@@ -221,26 +230,14 @@ void Hands::printHands() // prints the hand. for debugging and making sure the h
 void Hands::printHand()
 {   
     //std::cout << "Type: " << typeid(hands[0][0]).name() << "\n";
-    for (int c = 0; c < 7; c++) // haha c++, like the language
+    for (int i = 0; i < players; i++)
     {
-        std::cout << "Color: " << hands[0][c].getColor() << " Number: " << hands[0][c].getNumber() << ", ";
+        std::cout << "\nHand #" << (i + 1) << ":\n";
+        for (int c = 0; c < 7; c++) // haha c++, like the language
+        {
+            std::cout << "Color: " << hands[i][c].getColor() << " Number: " << hands[i][c].getNumber() << ", ";
+        }
     }
-    std::cout << "\n";
-    for (int c = 0; c < 7; c++)
-    {
-        std::cout << "Color: " << hands[1][c].getColor() << " Number: " << hands[1][c].getNumber() << ", ";
-    }
-    std::cout << "\n";
-    for (int c = 0; c < 7; c++) 
-    {
-        std::cout << "Color: " << hands[2][c].getColor() << " Number: " << hands[2][c].getNumber() << ", ";
-    }
-    std::cout << "\n";
-    for (int c = 0; c < 7; c++) 
-    {
-        std::cout << "Color: " << hands[3][c].getColor() << " Number: " << hands[3][c].getNumber() << ", ";
-    }
-    std::cout << "\n\nDone\n";
 }
 
 void Hands::printAttributes() // print the attributes of Hands. every attribute is pulled and printed at once. this is for debugging.
@@ -261,6 +258,8 @@ std::vector< std::vector<Card> > Hands::getHands()
     return hands;
 }
 
+//Player Class Methods
+
 Player::Player(std::string anom, int playerNumber)
 {
     name = anom;
@@ -273,6 +272,16 @@ std::string Player::getName()
     return name;
 }
 
+void Player::setHand(std::vector<Card> ahand)
+{
+    hand = ahand;
+}
+
+std::vector<Card> Player::getHand()
+{
+    return hand;
+}
+
 std::vector<std::string> Player::getPlayers()
 {
     return playerList;
@@ -283,10 +292,18 @@ int Player::getNumber()
     return number; 
 }
 
+//Game Class Methods
+
 void Game::askPlayerCount()
 {
+    
     std::cout << "How many players are playing the game?\n";
-    std::cin >> numPlayers;
+    while ((!(std::cin >> numPlayers)) or numPlayers == 0) // this loop checks for user error and makes sure numPlayers is an integer.
+    {
+        std::cout << "Please enter an integer greater than zero:\nHow many players are playing the game?\n";
+        std::cin.clear();
+        std::cin.ignore(123, '\n');
+    }
 
     for (int p = 1; p < (numPlayers + 1); p++)
     {
@@ -310,4 +327,52 @@ std::queue<Player> Game::getPlayerList()
 int Game::getPlayerCount()
 {
     return numPlayers;
+}
+
+void Game::printPlayerList()
+{
+    for (int i = 0; i < playerList.size(); i++)
+    {
+        std::cout << "Name: " << playerList.front().getName() << " Number: " << playerList.front().getNumber() << "\n";
+        playerList.push(playerList.front());
+        playerList.pop();
+    }
+}
+/*
+int Game::check()
+{
+
+}*/
+
+void Game::playTurn()
+{
+    std::string pick;
+
+    std::cout << playerList.front().getName() << "'s Turn. Pass the computer to them. ";
+
+    for (int show = 0; show < playerList.front().getHand().size(); show++)
+    {
+        std::cout << playerList.front().getHand()[show].getName() << ", ";
+    }
+    if (playerList.front().getHand().size() == 0)
+        {
+            std::cout << "Empty Hand\n";
+        }
+    std::cout << "\nPlease pick a card to play. Use the name of the card as shown on the screen:\n";
+    while (!(std::cin >> pick)) // this loop checks for user error and makes sure numPlayers is an integer.
+    {
+        std::cout << "Please enter the name of a card in your hand. Make sure to type exactly the name you see.\n";
+        std::cin.clear();
+        std::cin.ignore(123, '\n');
+    }
+    for (int check = 0; check < playerList.front().getHand().size();)
+    {
+        if (playerList.front().getHand()[check].getName() == pick)
+        {
+            middlePile.push(playerList.front().getHand()[check]);
+            playerList.front().getHand().erase(playerList.front().getHand().begin() + (check-1));
+        }
+    }
+
+
 }
