@@ -5,6 +5,8 @@
 #include <queue>
 #include <stack>
 
+
+
 class Card
 {   
         int color; // color property of each Card.
@@ -18,6 +20,37 @@ class Card
         int getColor();
         int getNumber();
         std::string getName(); 
+};
+
+class Player
+{
+        std::string name;
+        int number;
+        std::vector<Card> hand;
+
+    public:
+        Player(std::string anom, int playerNumber);
+        std::string getName();
+        int getNumber();
+        void addPlayers(); 
+        void setHand(std::vector<Card> ahand);
+        std::vector<Card> getHand();
+
+};
+
+class Game
+{
+        std::vector<std::string> playerNames;
+        std::stack<Card> middlePile;
+
+    public:
+        std::queue<Player> playerList;
+        int numPlayers;
+        void askPlayerCount();
+        void printPlayerList();
+        void updatePlayerList(std::queue<Player> anewplayerList);
+        void playTurn();
+        int check();
 };
 
 class Deck // creates a class Deck for the generation of the game deck. This deck is the standard Uno deck with 108 cards.
@@ -38,10 +71,10 @@ class Hands // creates a class Hands for the generation of each hand's vector. E
         std::vector< std::vector<Card> > hands; // a vector of vectors of strings that holds each hand. this is the return value of dealHand() which generates the hands. 
         int availableCards; // checks how many cards are still available in the game deck to make sure the code doesn't try taking too many cards from the game deck. also keeps track of how big the middle pile is. 
         int players; // the int value for how many players are playing. also an argument for this class, to determine how many cards to deal. 
-        int selection; // variable that dynamically changes to hold whichever number has been randomly generated in the dealHand() function. Used for debugging.
-
+        int selection; // variable that dynamically changes to hold whichever number has been randomly generated in the dealHand() function. Used for debugging.     
     public:
-        Hands(std::vector<Card> card_deck, int persons); // constructor to take the arguments for the class. takes in the game deck and the number of people playing.
+        std::queue<Player> playerList;
+        Hands(std::vector<Card> card_deck, int persons, std::queue<Player> aplayerList); // constructor to take the arguments for the class. takes in the game deck and the number of people playing.
         void testFunction(); // testFunction() to check that the functions within the class Hands are successfully being called.
         std::vector< std::vector<Card> > dealHands(); // the function to deal the hands that returns a vector of the hand. 
         void printHands();
@@ -51,36 +84,4 @@ class Hands // creates a class Hands for the generation of each hand's vector. E
 };
 
 
-class Player
-{
-        std::string name;
-        int number;
-        std::vector<std::string> playerList;
-        std::vector<Card> hand;
 
-    public:
-        Player(std::string anom, int playerNumber);
-        std::string getName();
-        int getNumber();
-        std::vector<std::string> getPlayers(); 
-        void addPlayers(); 
-        void setHand(std::vector<Card> ahand);
-        std::vector<Card> getHand();
-
-};
-
-class Game
-{
-        int numPlayers;
-        std::vector<std::string> playerNames;
-        std::queue<Player> playerList;
-        std::stack<Card> middlePile;
-
-    public:
-        void askPlayerCount();
-        int getPlayerCount();
-        std::queue<Player> getPlayerList();
-        void printPlayerList();
-        void playTurn();
-        int check();
-};

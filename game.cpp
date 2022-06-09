@@ -49,37 +49,40 @@ void Game::playTurn()
 {
     std::string pick;
 
-    std::cout << playerList.front().getName() << "'s Turn. Pass the computer to them. ";
+    std::cout << playerList.front().getName() << "'s Turn. Pass the computer to them. \n";
 
-    for (int show = 0; show < playerList.front().getHand().size(); show++)
+    for (int show = 0; show < (playerList.front().getHand().size() - 1); show++)
     {
         std::cout << playerList.front().getHand()[show].getName() << ", ";
     }
+    std::cout << playerList.front().getHand().back().getName() << "\n";
+
     if (playerList.front().getHand().size() == 0)
         {
             std::cout << "Empty Hand\n";
         }
     std::cout << "\nPlease pick a card to play. Use the name of the card as shown on the screen:\n";
-
-    for (int check = 0; check < playerList.front().getHand().size();)
+    std::cin >> pick;
+    auto picked = std::find(playerList.front().getHand().begin(), playerList.front().getHand().end(), pick);
+    if (picked != playerList.front().getHand().end())
     {
-        if (playerList.front().getHand()[check].getName() == pick)
+        middlePile.push(playerList.front().getHand()[picked - playerList.front().getHand().begin()]);
+        playerList.front().getHand().erase(playerList.front().getHand().begin() + ((picked - playerList.front().getHand().begin()) - 1));
+        for (int newPrint = 0; newPrint < playerList.front().getHand().size(); newPrint++)
         {
-            middlePile.push(playerList.front().getHand()[check]);
-            playerList.front().getHand().erase(playerList.front().getHand().begin() + (check - 1));
-            playerList.push(playerList.front());
-            playerList.pop();
+            std::cout << playerList.front().getHand()[newPrint].getName() << ", ";
         }
-        else
-        {
-            while (!(std::cin >> pick)) // this loop checks for user error and makes sure numPlayers is an integer.
-            {
-                std::cout << "Please enter the name of a card in your hand. Make sure to type exactly the name you see.\n";
-                std::cin.clear();
-                std::cin.ignore(123, '\n');
-            }
-        }
+        playerList.push(playerList.front());
+        playerList.pop();
+        playTurn();
     }
+    else
+    {
+        std::cout << "\nCard selection failed.\n";
+    }
+}
 
-
+void Game::updatePlayerList(std::queue<Player> anewplayerList)
+{
+    playerList = anewplayerList;
 }

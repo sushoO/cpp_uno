@@ -32,6 +32,8 @@ std::vector<std::vector<Card> > Hands::dealHands() // function that deals the Ha
         hands.push_back(hand);
         hand.clear();
         playerList.front().setHand(hands.front());
+        playerList.push(playerList.front());
+        playerList.pop();
     }
     
     /*

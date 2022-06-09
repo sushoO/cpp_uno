@@ -30,23 +30,22 @@ int main(){
     srand (time(NULL)); //this line is for seeding the random number generator used to shuffle and deal hands. 
     
     game.askPlayerCount();
-    int playerCount = game.getPlayerCount();
-    std::queue<Player> playerList = game.getPlayerList();
-    //std::cout << playerList.size() << "\n";
+    //std::cout << game.playerList.size() << "\n";
    
     game.printPlayerList();
 
     //std::cout << "\n" << typeid(players).name() << "\n"; // this checks what data type "players" is. For debugging and testing whether it returns as an int.
 
-    Hands sample(generatedDeck, playerCount); //Create an object from class Hands.
+    Hands hands(generatedDeck, game.numPlayers, game.playerList); //Create an object from class Hands.
 
-    std::vector< std::vector<Card> > player_hand = sample.dealHands(); //Creates a vector of strings from the returned value of dealHand(), which generated different vectors for each player.
-    //sample.printHand(); //printHand() is a function in the class Hands that checks how the hands look (for debugging).
-    //sample.printAttributes(); //printAttributes() prints each private variable in Hands (for debugging)
-    //sample.printHand();
-    //sample.printHands();
+    std::vector< std::vector<Card> > player_hands = hands.dealHands(); //Creates a vector of strings from the returned value of dealHand(), which generated different vectors for each player.
+    game.updatePlayerList(hands.playerList);
+    //hands.printHand(); //printHand() is a function in the class Hands that checks how the hands look (for debugging).
+    //hands.printAttributes(); //printAttributes() prints each private variable in Hands (for debugging)
+    //hands.printHand();
+    //hands.printHands();
     
-    //std::vector< std::vector<Card> > handTest = sample.getHands();
+    //std::vector< std::vector<Card> > handTest = hands.getHands();
     //std::cout << "\n" <<  handTest.size() << "\n" << typeid(handTest).name() << "\n";
     game.playTurn();
 }
