@@ -1,19 +1,14 @@
 #include <iostream>
-#include <string>
-#include <vector>
-#include <tuple>
-#include <random>
-#include <stdlib.h>
 #include "uno.hpp"
 
 // compiled with g++ main.cpp uno.cpp
-// run with ./a.out
+// ran with ./a.out
 
 int main(){
     Game game;
     Deck game_deck; //creates an object from the Deck class.
 
-    std::vector<Card> generatedDeck = game_deck.createDeck(); //creates a vector of strings called generatedDeck that is the return value of the function createDeck() found within the class Deck. This vector is unaltered.
+    //creates a vector of strings called generatedDeck that is the return value of the function createDeck() found within the class Deck. This vector is unaltered.
     
     //std::vector<Card> shuffledDeck = game_deck.shuffleDeck(); //takes the created vector of strings and shuffles it, allowing for the hand dealing to begin.
     
@@ -31,14 +26,14 @@ int main(){
     
     game.askPlayerCount();
     //std::cout << game.playerList.size() << "\n";
-   
     game.printPlayerList();
+    game_deck.createDeck();
+    //game_deck.printDeck();
 
+    Hands hands(game_deck.deck, game.numPlayers, &game.playerList); //Create an object from class Hands.
+    hands.dealHands(); //Creates a vector of strings from the returned value of dealHand(), which generated different vectors for each player.
     //std::cout << "\n" << typeid(players).name() << "\n"; // this checks what data type "players" is. For debugging and testing whether it returns as an int.
 
-    Hands hands(generatedDeck, game.numPlayers, game.playerList); //Create an object from class Hands.
-
-    std::vector< std::vector<Card> > player_hands = hands.dealHands(); //Creates a vector of strings from the returned value of dealHand(), which generated different vectors for each player.
     game.updatePlayerList(hands.playerList);
     //hands.printHand(); //printHand() is a function in the class Hands that checks how the hands look (for debugging).
     //hands.printAttributes(); //printAttributes() prints each private variable in Hands (for debugging)

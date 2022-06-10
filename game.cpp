@@ -44,9 +44,14 @@ int Game::check()
 {
 
 }*/
+void Game::updatePlayerList(std::queue<Player> anewplayerList)
+{
+    playerList = anewplayerList;
+}
 
 void Game::playTurn()
 {
+    bool playing = true;
     std::string pick;
 
     std::cout << playerList.front().getName() << "'s Turn. Pass the computer to them. \n";
@@ -61,28 +66,40 @@ void Game::playTurn()
         {
             std::cout << "Empty Hand\n";
         }
-    std::cout << "\nPlease pick a card to play. Use the name of the card as shown on the screen:\n";
-    std::cin >> pick;
-    auto picked = std::find(playerList.front().getHand().begin(), playerList.front().getHand().end(), pick);
-    if (picked != playerList.front().getHand().end())
+    while (playing == true)
     {
-        middlePile.push(playerList.front().getHand()[picked - playerList.front().getHand().begin()]);
-        playerList.front().getHand().erase(playerList.front().getHand().begin() + ((picked - playerList.front().getHand().begin()) - 1));
-        for (int newPrint = 0; newPrint < playerList.front().getHand().size(); newPrint++)
+        std::cout << "\nPlease pick a card to play. Use the name of the card as shown on the screen:\n";
+        std::cin >> pick;
+        //std::cout << "\nInput Type: " << typeid(pick).name() << "\n";
+
+
+        for (int check = 0; check < playerList.front().getHand().size(); check++)
         {
-            std::cout << playerList.front().getHand()[newPrint].getName() << ", ";
+            //std::cout << "\nCard Name Type: " << typeid(playerList.front().getHand()[check].getName()).name();
+            if (pick.compare(playerList.front().getHand()[check].getName()) == 0)
+            {
+                std::cout << "\nCard selection found. (x" << check + 1 << ")\n";
+                break;
+            }
+            else
+            {
+                std::cout << "\nCard selection failed. (x" << check + 1 << ")\n";
+            }
+            std::cout << "\n";
         }
-        playerList.push(playerList.front());
-        playerList.pop();
-        playTurn();
+        break;
+    }
+    /*
+    if ( (playerList.front().getHand()[check].getColor() == middlePile.top().getColor()) || (playerList.front().getHand()[check].getNumber() == middlePile.top().getNumber()) )
+    {
+        middlePile.push(playerList.front().getHand()[check]);
+        playerList.front().getHand().erase(playerList.front().getHand().begin() + (check - 1));
+        playing = false;
     }
     else
     {
-        std::cout << "\nCard selection failed.\n";
+        playedCard = NULL;
+        playing = true;
     }
-}
-
-void Game::updatePlayerList(std::queue<Player> anewplayerList)
-{
-    playerList = anewplayerList;
+    */
 }

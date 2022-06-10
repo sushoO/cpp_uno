@@ -55,13 +55,12 @@ class Game
 
 class Deck // creates a class Deck for the generation of the game deck. This deck is the standard Uno deck with 108 cards.
 {
-    std::vector<Card> deck; // private vector of strings for the deck.
-
-public:
-    void testFunction(); // test to check if the class's functions are successfully being called.
-    std::vector<Card> createDeck(); // the function to generate the game deck.
-    void printDeck(); // function to print the game deck, for debugging and checking if the code works.
-    std::vector<Card> shuffleDeck();
+    public:
+        std::vector<Card> deck; // private vector of strings for the deck.
+        void testFunction(); // test to check if the class's functions are successfully being called.
+        std::vector<Card> createDeck(); // the function to generate the game deck.
+        void printDeck(); // function to print the game deck, for debugging and checking if the code works.
+        std::vector<Card> shuffleDeck();
 };
 
 class Hands // creates a class Hands for the generation of each hand's vector. Each hand will be of 7 cards.
@@ -76,7 +75,7 @@ class Hands // creates a class Hands for the generation of each hand's vector. E
         std::queue<Player> playerList;
         Hands(std::vector<Card> card_deck, int persons, std::queue<Player> aplayerList); // constructor to take the arguments for the class. takes in the game deck and the number of people playing.
         void testFunction(); // testFunction() to check that the functions within the class Hands are successfully being called.
-        std::vector< std::vector<Card> > dealHands(); // the function to deal the hands that returns a vector of the hand. 
+        void dealHands(); // the function to deal the hands that returns a vector of the hand. 
         void printHands();
         void printHand(); // function to print the hand generated. used to debug and make sure the hands are properly generated.
         void printAttributes(); // function to print every attribute of the Hands class. for debugging and making sure the values are correct.
