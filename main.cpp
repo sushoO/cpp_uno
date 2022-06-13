@@ -5,6 +5,7 @@
 // ran with ./a.out
 
 int main(){
+    bool play = true;
     Game game;
     Deck game_deck; //creates an object from the Deck class.
 
@@ -30,7 +31,7 @@ int main(){
     game_deck.createDeck();
     //game_deck.printDeck();
 
-    Hands hands(game_deck.deck, game.numPlayers, &game.playerList); //Create an object from class Hands.
+    Hands hands(game_deck.deck, game.numPlayers, game.playerList); //Create an object from class Hands.
     hands.dealHands(); //Creates a vector of strings from the returned value of dealHand(), which generated different vectors for each player.
     //std::cout << "\n" << typeid(players).name() << "\n"; // this checks what data type "players" is. For debugging and testing whether it returns as an int.
 
@@ -42,5 +43,5 @@ int main(){
     
     //std::vector< std::vector<Card> > handTest = hands.getHands();
     //std::cout << "\n" <<  handTest.size() << "\n" << typeid(handTest).name() << "\n";
-    game.playTurn();
+    game.playTurn();        
 }

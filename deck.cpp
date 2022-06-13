@@ -12,13 +12,13 @@ std::vector<Card> Deck::createDeck() // function to generate the game deck.
     std::array<int, 5> color = {0 /*Wild*/, 1 /*Red*/, 2 /*Green*/, 3 /*Blue*/, 4 /*Yellow*/};
     std::array<int, 13> number = {0 /*Card #0 or Wild Card if Color = 0*/, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 /*Skip*/, 11 /*Reverse*/, 12 /*Plus 2 or Plus 4 if color = 0*/};
     std::array<std::string, 5> colorNames = {"Wild", "Red", "Green", "Blue", "Yellow"};
-    std::array<std::string, 13> numberNames = {" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " Skip", " Reverse", " Plus 2"};
+    std::array<std::string, 13> numberNames = {" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7", " 8", " 9", " Skip", " Reverse", " +2"};
 
 
     for (int assignColor = 1; assignColor < color.size(); assignColor++)
     {
         deck.push_back(Card(0, 0, colorNames[0]));
-        deck.push_back(Card(0, 12, (colorNames[0] + " Plus 4")));
+        deck.push_back(Card(0, 12, (colorNames[0] + " +4")));
         deck.push_back(Card(color[assignColor], number[0], colorNames[assignColor] + numberNames[0]));
 
         for (int twice = 0; twice < 2; twice++)

@@ -9,7 +9,7 @@ Hands::Hands(std::vector<Card> card_deck, int persons, std::queue<Player> aplaye
 {
     deck = card_deck; // assigns the game deck to an attribute
     players = persons; // assigns the # of players as an attribute.
-    std::queue<Player> playerList = aplayerList;
+    playerList = aplayerList;
 }
 
 void Hands::testFunction() // testFunction() to check whether functions in class Hands are successfully being called.
@@ -24,7 +24,7 @@ void Hands::dealHands() // function that deals the Hands to each player.
     {
         for (int handSize = 0; handSize < 7; handSize++)
         {
-            printAttributes(); // printAttributes() is defined later. prints every attribute of the class Hands.
+            //printAttributes(); // printAttributes() is defined later. prints every attribute of the class Hands.
             availableCards = deck.size(); // checks how many cards are still available to be dealt.
             selection = rand() % (availableCards + 1); // stores the selection number that was randomly generated from the number of available cards. selection is between 0 and the deck size. I add one because the rand() function generates a number between 0 and one less than the number to the right of the %.
             hand.push_back(deck[selection]); // here the selected card is put into a hand.
@@ -35,6 +35,7 @@ void Hands::dealHands() // function that deals the Hands to each player.
         playerList.front().setHand(hands.front());
         playerList.push(playerList.front());
         playerList.pop();
+        //std::cout << "Hands dealt";
     }
     
     /*

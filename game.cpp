@@ -23,11 +23,12 @@ void Game::askPlayerCount()
         std::cin >> playerName;
         playerNames.push_back(playerName);
     }
-
+    //std::cout << playerNames.size();
     for (int instantiatePlayers = 0; instantiatePlayers < playerNames.size(); instantiatePlayers++)
     {
         playerList.push(Player(playerNames[instantiatePlayers], (instantiatePlayers + 1)));
     }
+    //std::cout << playerList.size();
 }
 
 void Game::printPlayerList()
@@ -51,8 +52,9 @@ void Game::updatePlayerList(std::queue<Player> anewplayerList)
 
 void Game::playTurn()
 {
-    bool playing = true;
-    std::string pick;
+    bool picking = true;
+    std::string pickColor;
+    std::string pickNumber;
 
     std::cout << playerList.front().getName() << "'s Turn. Pass the computer to them. \n";
 
@@ -62,30 +64,43 @@ void Game::playTurn()
     }
     std::cout << playerList.front().getHand().back().getName() << "\n";
 
+
     if (playerList.front().getHand().size() == 0)
         {
             std::cout << "Empty Hand\n";
         }
-    while (playing == true)
+    while (picking == true)
     {
-        std::cout << "\nPlease pick a card to play. Use the name of the card as shown on the screen:\n";
-        std::cin >> pick;
+        std::cout << "\nPlease pick the color of the card you want to play. Type exactly what is shown on the screen:\n";
+        std::cin >> pickColor >> pickNumber;
+        std::string pick = pickColor + " " + pickNumber;
         //std::cout << "\nInput Type: " << typeid(pick).name() << "\n";
-
 
         for (int check = 0; check < playerList.front().getHand().size(); check++)
         {
             //std::cout << "\nCard Name Type: " << typeid(playerList.front().getHand()[check].getName()).name();
-            if (pick.compare(playerList.front().getHand()[check].getName()) == 0)
+
+            std::cout << "Compare Result: " << pick.compare(playerList.front().getHand()[check].getName()) <<"\nPick Value: " << pick << "\nCard Value: " << playerList.front().getHand()[check].getName();
+            
+            if (((pick.compare(playerList.front().getHand()[check].getName()))) == 0)
             {
+                std::cout << "\nStart\n";
                 std::cout << "\nCard selection found. (x" << check + 1 << ")\n";
+                middlePile.push(playerList.front().getHand()[check]);
+                std::cout << "\nMiddle Pile push done\n";
+                playerList.front().getHand().erase(playerList.front().getHand().begin() + (check - 1));
+                std::cout << "\nDone\n" << check;
                 break;
+            }
+            else if (pick == "clear")
+            {
+                picking = false;
             }
             else
             {
                 std::cout << "\nCard selection failed. (x" << check + 1 << ")\n";
             }
-            std::cout << "\n";
+            std::cout << "\n";   
         }
         break;
     }
@@ -96,7 +111,7 @@ void Game::playTurn()
         playerList.front().getHand().erase(playerList.front().getHand().begin() + (check - 1));
         playing = false;
     }
-    else
+    else1
     {
         playedCard = NULL;
         playing = true;
