@@ -17,7 +17,7 @@ std::vector<Card> Deck::createDeck() // function to generate the game deck.
 
     for (int assignColor = 1; assignColor < color.size(); assignColor++)
     {
-        deck.push_back(Card(0, 0, colorNames[0]));
+        deck.push_back(Card(0, 0, colorNames[0] + " Card"));
         deck.push_back(Card(0, 12, (colorNames[0] + " +4")));
         deck.push_back(Card(color[assignColor], number[0], colorNames[assignColor] + numberNames[0]));
 
@@ -35,9 +35,10 @@ std::vector<Card> Deck::createDeck() // function to generate the game deck.
 
 void Deck::printDeck() // printDeck() to see the deck that was generated. for debugging
 {
+    std::cout << "\n\n";
     for (int deckIndice = 0; deckIndice < deck.size(); deckIndice++)
     {
-        std::cout << "Name: " << deck[deckIndice].getName() << "\n";
+        std::cout << deck[deckIndice].getName() << ", ";
     }
     std::cout << "\n\n\n";
 }

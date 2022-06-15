@@ -6,9 +6,8 @@
 
 //Player Class Methods
 
-Player::Player(std::string anom, int playerNumber)
+Player::Player(std::string anom, int playerNumber, std::vector<Card> &ahand) : name(anom), hand(ahand) 
 {
-    name = anom;
     number = playerNumber;
 }
 
@@ -17,7 +16,7 @@ std::string Player::getName()
     return name;
 }
 
-void Player::setHand(std::vector<Card> ahand)
+void Player::setHand(std::vector<Card> &ahand)
 {
     hand = ahand;
 }
